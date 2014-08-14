@@ -44,8 +44,8 @@ public class Pagos implements Serializable {
     public Pagos() {
     }
 
-    public Pagos(Integer idPagos, Float primerPago, Float segundoPago, Float total, Cliente idCliente) {
-        this.idPagos = idPagos;
+    public Pagos(Float primerPago, Float segundoPago, Float total, Cliente idCliente) {
+        
         this.primerPago = primerPago;
         this.segundoPago = segundoPago;
         this.total = total;

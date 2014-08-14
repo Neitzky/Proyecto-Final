@@ -22,12 +22,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ControladorPagos {
     
      @RequestMapping(value="/calificacion/{parcial}/{final}/{total}/{id}", method=RequestMethod.GET, headers={"Accept=text/html"})
-    public @ResponseBody String mensajito(@PathVariable float parcial, @PathVariable float 
-            cfinal,@PathVariable float total, @PathVariable int id ){
+    public @ResponseBody String mensajito(@PathVariable float primerPago, @PathVariable float 
+            segundoPago,@PathVariable float total, @PathVariable int id ){
         String mensajito="nada";
         try{
            DAOPagosImpl d= new DAOPagosImpl();
-            d.agregarCalificacion(new Pagos(primerpago, segundopago, total,new Cliente(id) ));
+            d.agregarPago(new Pagos(primerPago, segundoPago, total,new Cliente(id)));
            mensajito= "Pago guardado con exito";
         }catch(Exception  e){
             mensajito="Lo siento pero no existe ese id de usuario";

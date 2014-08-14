@@ -16,7 +16,7 @@ import org.hibernate.Query;
  */
 public class DAOPagosImpl extends DAO{
     
-    public void agregarCalificacion(Pagos c) {
+    public void agregarPago(Pagos c) {
     begin();
  
     

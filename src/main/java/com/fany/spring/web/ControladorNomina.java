@@ -32,7 +32,7 @@ public class ControladorNomina {
  
   DAONominaImpl nom=new DAONominaImpl();
   nom.agregarProducto(new Nomina(new Date(), saldo, new Usuario(id))); 
-           mensajito= "Nomina guardado con exito";
+           mensajito= "Nomina guardada con exito";
         }catch(Exception  e){
             mensajito=e.getMessage();
         }

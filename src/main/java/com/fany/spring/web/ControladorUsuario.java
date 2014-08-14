@@ -19,71 +19,64 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- *
- * @author servicio.presupuesto
- */
-
 @Controller
 @RequestMapping("/")
 public class ControladorUsuario {
+
+    @RequestMapping(value="/usuario/{nombre}/{sueldo}", method=RequestMethod.GET, headers={"Accept=text/html"})
+    public @ResponseBody String metodo(@PathVariable String nombre, @PathVariable float sueldo){
+        
+        
+ DAOUsuarioImpl du=new DAOUsuarioImpl();
+ du.agregarProducto(new Usuario(nombre, sueldo)); 
+ 
+        return "Nombre y sueldo guardado con exito";
+    }
     
-     @RequestMapping(value="/usuario/{nombre}", method=RequestMethod.POST, headers={"Accept=text/html"})
-    public @ResponseBody String insertar(@PathVariable String nombre){
-        /*
-        Esto esta mal, alerta de lo que no se debe hacer, esta clase que le puse de nombre Guarda NO USA UNA SESION A PRUEBA DE THREASD NI NADA
-        ES SOLO UN EJEMPLO DE  CONTROLADOR, LE PASAMOS UN PARAMETRO NOMBRE Y LA LO GUADA, TU LABOR ES HACER QUE FUNCIONE 
-        A PRUEBA DE TREADS JIJIJI
-        */
- DAOUsuarioImpl.insertar(new Usuario(nombre));
-  return "El usuario se ha registrado correctamente";
+    @RequestMapping(value="/usuario", method=RequestMethod.GET, headers={"Accept=application/json"})
+    public @ResponseBody String metodo2()throws Exception{
+        
+        
+  DAOUsuarioImpl g=new DAOUsuarioImpl();
+  Map<String,ArrayList<Usuario>> singletonMap =Collections.singletonMap("usuarios", g.buscarTodosClientes());
+  ObjectMapper mapper=new ObjectMapper();
+  
+  return mapper.writeValueAsString(g.buscarTodosClientes());
+    }
+    
+    
+    /*Metodo post para guardar un usuario con todos sus campos*/
+    @RequestMapping(value="/usuario", method=RequestMethod.POST, headers={"Accept=Application/json"})
+    public @ResponseBody String guardarUsuario(@RequestBody String json)throws Exception{
+     System.out.println("Se guardara el usuario"+json);
+     
+     Map<String,String> map = new HashMap<String,String>();
+	ObjectMapper mapper = new ObjectMapper();
+ 
+	
+ 
+		//convertimos el Json a map
+		map = mapper.readValue(json, 
+		    new TypeReference<HashMap<String,String>>(){});
+ 
+		System.out.println(map);
+             String nombre= map.get("nombre");
+             float sueldo=Float.parseFloat(map.get("sueldo"));
+             //A GUARDARSE!!!
+             DAOUsuarioImpl du=new DAOUsuarioImpl();
+            du.agregarProducto(new Usuario(nombre, sueldo)); 
+             
+            // int edad=Integer.parseInt(map.get("edad"));
+             System.out.println("Este es el usuario a guardarse:"+nombre +" Y el sueldo es"+sueldo);
+             
+              Usuario usuario=new Usuario("fany gomez",21.0f);
+        Map<String, Usuario> singletonMap=Collections.singletonMap("usuarios",usuario);
+		ObjectMapper mapper2=new ObjectMapper();
+		return mapper2.writeValueAsString(singletonMap);
  
     }
     
-    @RequestMapping(value="/usuario{id}/{nombre}", method=RequestMethod.PUT, headers={"Accept=text/html"})
-    public @ResponseBody String actualizar(@PathVariable int id, @PathVariable String nombre){
-       
-        
-        try {
-            DAOUsuarioImpl.actualizar(new Usuario(id, nombre));
-            return "El registro se ha modificado correctamente";    
-        } catch (Exception e) {
-            return "El registro solicitado no existe";
-        }
-        
-    }
-    
-    @RequestMapping (value = "/usuario/{id}/{nombre}", method = RequestMethod.DELETE, headers = {"Accept=text/html"})
-    public @ResponseBody String eliminar (@PathVariable int id, @PathVariable String nombre){
-        
-        try {
-            DAOUsuarioImpl.borrar(new Usuario(id, nombre));
-            return "El registro se ha eliminado correctamente";    
-        } catch (Exception e) {
-            return "El registro solicitado no existe";
-        }
-        
-    }
-    
-    @RequestMapping (value = "/usuario", method = RequestMethod.GET, headers = {"Accept=Application/json"})
-    public @ResponseBody String buscarTodos() throws IOException{
-        
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(DAOUsuarioImpl.buscarTodos());
-    }
-    
-    @RequestMapping (value = "/proveedores/{id}", method = RequestMethod.GET, headers = {"Accept=text/html"})
-    public @ResponseBody String buscarPorId(@PathVariable int id){
-        
-        return DAOUsuarioImpl.buscarId(id).toString();
-    }
 }
-    
     
    
     
-    
-
-    
-    
-

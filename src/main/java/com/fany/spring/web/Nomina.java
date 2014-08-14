@@ -46,6 +46,12 @@ public class Nomina implements Serializable {
     public Nomina() {
     }
 
+    public Nomina(Date fechaPago, Float saldo, Usuario id) {
+        this.fechaPago = fechaPago;
+        this.saldo = saldo;
+        this.id = id;
+    }
+
     public Nomina(Integer idNomina) {
         this.idNomina = idNomina;
     }

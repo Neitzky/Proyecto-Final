@@ -28,11 +28,9 @@ import org.codehaus.jackson.annotate.JsonIgnore;
  */
 @Entity
 @Table(name = "usuario")
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
+
 public class Usuario implements Serializable {
-    @OneToMany(mappedBy = "id")
-    private Collection<Nomina> nominaCollection;
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,9 +47,8 @@ public class Usuario implements Serializable {
     public Usuario() {
     }
 
-    public Usuario(Collection<Nomina> nominaCollection, Integer id, String nombre, Float sueldo) {
-        this.nominaCollection = nominaCollection;
-        this.id = id;
+    public Usuario(String nombre, Float sueldo) {
+        
         this.nombre = nombre;
         this.sueldo = sueldo;
     }
