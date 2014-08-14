@@ -6,5 +6,9 @@
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
+    <mapping class="com.fany.spring.web.Usuario"/>
+    <mapping class="com.fany.spring.web.Pagos"/>
+    <mapping class="com.fany.spring.web.Nomina"/>
+    <mapping class="com.fany.spring.web.Cliente"/>
   </session-factory>
 </hibernate-configuration>
